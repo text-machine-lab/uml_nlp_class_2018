@@ -1,0 +1,4 @@
+FROM jgc128/uml_nlp_class:cuda8_python3
+
+ADD . /usr/src/app
+CMD ["python3", "hw1.py"]
