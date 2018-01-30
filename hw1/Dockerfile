@@ -1,0 +1,13 @@
+FROM jgc128/uml_nlp_class
+
+RUN apt-get update && apt-get install -y --no-install-recommends  curl unzip  && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download the text8 data
+RUN curl -SL http://mattmahoney.net/dc/text8.zip | gunzip > /usr/src/app/text8.txt
+
+
+ADD . /usr/src/app
+
+CMD ["python3", "hw1.py"]
