@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-nvidia-docker run --ipc=host --rm uml_nlp_class_hw1
+nvidia-docker run --ipc=host -t --rm uml_nlp_class_hw1

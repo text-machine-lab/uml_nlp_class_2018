@@ -1,3 +1,8 @@
+"""
+A template for the first assignment.
+See https://github.com/text-machine-lab/uml_nlp_class/tree/master/hw1/README.md for details.
+"""
+
 from collections import Counter
 
 import numpy as np
@@ -35,7 +40,7 @@ def build_dataset(data, vocab_size=50000):
     :return: A list of tokens ids, a dictionary token -> id, a dictinary id -> token
     """
 
-    # we will replace unfrequent tokens with the `unknown` token
+    # we will replace non-frequent tokens with the `unknown` token
     unk_token = '<UNK>'
 
     # calc frequencies of the tokens in our data
@@ -43,8 +48,7 @@ def build_dataset(data, vocab_size=50000):
     most_common_tokens = tokens_counts.most_common(vocab_size)
 
     # create a token => id mapping
-    token2id = {}
-    token2id[unk_token] = 0
+    token2id = {unk_token: 0}
     for token, counts in most_common_tokens:
         token2id[token] = len(token2id)
 
@@ -81,42 +85,19 @@ class SkipGramDataset(torch.utils.data.Dataset):
         :param index: index of the sample
         :return: a tuple (target_word index, context word index)
         """
-
-        target_word_index = index + self.skip_window
-
-        # random offset from the context window
-        offset = np.random.randint(1, self.skip_window + 1)
-
-        # go to the left or right context window randomly
-        if np.random.rand() > 0.5:
-            offset *= -1
-
-        context_word_index = target_word_index + offset
-
-        target_word = self.data[target_word_index]
-        context_word = self.data[context_word_index]
-
-        return target_word, context_word
+        raise NotImplementedError('Implement the __getitem__ method of the dataset')
 
     def __len__(self):
         """
         Get the length of the dataset
         :return: length of the dataset
         """
-
-        # allow window in the beginning of the dataset
-        return len(self.data) - 2 * self.skip_window
+        raise NotImplementedError('Implement the __len__ method of the dataset')
 
 
 class SkipGramModel(torch.nn.Module):
     def __init__(self, vocab_size, embedding_dim):
         super().__init__()
-
-        # embedding layer
-        self.embedding = torch.nn.Embedding(vocab_size, embedding_dim)
-
-        # projection layer
-        self.fc = torch.nn.Linear(embedding_dim, vocab_size)
 
     def forward(self, inputs):
         """
@@ -124,13 +105,7 @@ class SkipGramModel(torch.nn.Module):
         :param inputs: A tensor of size (batch size, ) of indices of the target words
         :return: A tensot of the shape of (batch size, vocab size) of unnormalized probabilities of the words being the context words
         """
-
-        # inputs have the shape (B,)
-        embedded = self.embedding(inputs)  # (B x embedding_dim)
-
-        outputs_logits = self.fc(embedded)  # (B x vocab_size)
-
-        return outputs_logits
+        raise NotImplementedError('Implement the forward method of the model')
 
     def find_closest(self, inputs, nb_closest=5):
         """
@@ -139,25 +114,7 @@ class SkipGramModel(torch.nn.Module):
         :param nb_closest: The number of closest word to return
         :return: A tensor of size (bach size x nb_closest) containing indices of the closest words
         """
-
-        # normalize to calc cosine similarity
-        embeddings_normalized = F.normalize(self.embedding.weight)
-
-        embedded = F.embedding(inputs, embeddings_normalized)
-        cosine_similarity = torch.matmul(embedded, embeddings_normalized.transpose(1, 0))
-
-        closest_tokens = []
-        batch_size = inputs.size(0)
-        for i in range(batch_size):
-            _, closest_idx = torch.sort(cosine_similarity[i], descending=True)
-
-            # start with 1 as the closest token will be the token itself
-            closest_idx = closest_idx[1:nb_closest + 1]
-
-            closest_tokens.append(closest_idx)
-
-        closest_tokens = torch.stack(closest_tokens)
-        return closest_tokens
+        raise NotImplementedError('Implement the find_closest method of the model')
 
 
 def cuda(obj):
@@ -191,6 +148,7 @@ def main():
     model = SkipGramModel(vocab_size=len(token2id), embedding_dim=embedding_dim)
     model = cuda(model)
 
+    # cross-entropy loss is used as the models outputs unnormalized probability distribution over the vocabulary
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adagrad(model.parameters(), lr=0.1)
 
