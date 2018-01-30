@@ -38,7 +38,8 @@ Closest to time: cv, gentoo, bnp, bread, vampyre
 
 
 ## Code template
-We provide a base code template written in Python3 
+We provide a base code template written in Python3 using 
+the [PyTorch](http://pytorch.org/) library
 which you can use as a starting point. 
 However, feel free to write your code from scratch 
 or use a different programming language, as long as you provide 
@@ -152,4 +153,7 @@ Efficient estimation of word representations in vector space.
 *arXiv preprint arXiv:1301.3781.* [\[arXiv\]](https://arxiv.org/abs/1301.3781)
 2. [Deep Learning with PyTorch: A 60 Minute Blitz](http://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html)
 3. [Get started with Docker](https://docs.docker.com/get-started/)
+4. [PyTorch tutorials](http://pytorch.org/tutorials/)
+5. [PyTorch documentation](http://pytorch.org/docs/0.3.0/)
+6. [PyTorch examples](https://github.com/pytorch/examples)
 
