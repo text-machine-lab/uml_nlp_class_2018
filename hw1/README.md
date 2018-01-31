@@ -1,16 +1,54 @@
 # Assignment #1
 
-In this assignment you will implement and train 
+This homework consists of two parts. In the first part you will use 
+the fastText [\[1\]](https://arxiv.org/abs/1607.04606) library to train 
+your very own word vectors on the [Text8](http://mattmahoney.net/dc/text8.zip) data.
+In the second part you will implement and train 
 a [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) 
-skip-gram model [\[1\]](https://arxiv.org/abs/1301.3781)
-using the [Text8](http://mattmahoney.net/dc/text8.zip) data.
+skip-gram model [\[2\]](https://arxiv.org/abs/1301.3781)
+on the same data.
 
 If you choose to use the provided code, you will familiarize yourself 
 with the [PyTorch library ](http://pytorch.org/) and its build-in widely used 
 classes for datasets and models.
 
 
-## What you should do
+## Part 1 - fastText library
+This library implements an algorithm, described in [\[2\]](https://arxiv.org/abs/1301.3781)
+and efficiently learns vectors representation of words. In addition, it can generate vectors for
+out-of-vocabulary words and preform text classification. 
+
+To use this library in a docker container, build the image with the `docker_build.sh` script 
+and then run `docker_run_part1.sh`.
+
+
+### Training word vectors
+To train a skip-gram model on the provided data run `fasttext` as follows:
+```bash
+$ fasttext skipgram -input text8.txt -dim 128 -output model_text8
+```
+
+This command will train a model and save it in a binary format in the file `model_text8.bin`.
+The trained vectors are be saved in the file `model_text8.vec`. 
+
+To see the vectors themselves, you can use the following command: 
+```bash
+$ head -n 300 model_text8.vec | tail
+```
+
+You can print word vectors for the word in the file `test_words.txt` as follows:
+```bash
+$ cat test_words.txt | fasttext print-word-vectors model_text8.bin
+```
+
+To query the closest words for a given word in an interactive mode run the `fasttext` libary with the `nn` option:
+```bash
+$ fasttext nn model_text8.bin
+```
+
+## Part 2 - tarining a skip-gram Word2Vec model
+
+### What you should do
 You should provide your code along with a `Dockerfile` 
 which builds an image that, upon running, trains 
 a Word2Vec skip-gram model and prints the loss and the closest words 
@@ -20,24 +58,30 @@ for the words in the `test_words.txt` file in this repository
 as training progresses  in the following format:
 ```
 Starting training...
-Iteration: 1000 loss: 7.29280709028244
-Closest to one: five, two, three, nine, four
-Closest to are: were, chengdu, mice, impiety, is
-Closest to you: installing, lderlin, src, kazan, detract
-Closest to time: mixture, bread, grind, gentoo, cv
+Iteration: 1000, elapsed time: 0:00:31.748593 [31 sec/1000 iters], loss: 7.296961873531342
+Closest to one: two, flanagan, collage, heaven, eight
+Closest to are: were, is, sampled, require, competed
+Closest to you: haldeman, poised, orpheus, astros, cessna
+Closest to time: sj, ayn, revisions, freebase, mushroom
+Closest to lambeth: escaping, centralised, annuity, cardinal, blackmailed
+Closest to to: dpp, infinitives, transsexualism, deviation, amano
+Closest to is: was, are, gaul, hatta, shuttle
 
-Iteration: 2000 loss: 6.86459051990509
-Closest to one: two, five, three, nine, four
-Closest to are: were, is, impiety, emerson, chengdu
-Closest to you: installing, lderlin, kazan, libro, moabite
-Closest to time: cv, gentoo, bnp, bread, vampyre
+Iteration: 2000, elapsed time: 0:01:01.879741 [30 sec/1000 iters], loss: 6.859302348136902
+Closest to one: two, seven, flanagan, eight, nine
+Closest to are: were, is, sampled, require, amassing
+Closest to you: haldeman, orpheus, poised, astros, i
+Closest to time: sj, ayn, revisions, freebase, hazards
+Closest to cells: votes, tiffany, committing, fifteen, rickenbacker
+Closest to linux: christensen, negativity, liberals, figured, offer
+Closest to bottle: rb, talmadge, nasal, precludes, kindred
 
 ...
 ``` 
 
 
 
-## Code template
+### Code template
 We provide a base code template written in Python3 using 
 the [PyTorch](http://pytorch.org/) library
 which you can use as a starting point. 
@@ -45,7 +89,7 @@ However, feel free to write your code from scratch
 or use a different programming language, as long as you provide 
 the corresponding `Dockerfile` to run it.  
 
-### Overview
+#### Overview
 
 The most of the code, including the loading of the data and the training loop,
 is already written for you. All you need to do is to implement 
@@ -54,7 +98,7 @@ some functions in the `SkipGramDataset` and `SkipGramModel` classes.
 First, you would need to implement the `__len__` and the `__getitem__` methods 
 of the `SkipGramDataset` class.  
 
-#### `SkipGramDataset` class 
+##### `SkipGramDataset` class 
 
 This class is based on the 
 [`torch.utils.data.Dataset`](http://pytorch.org/docs/0.3.0/data.html#torch.utils.data.Dataset) 
@@ -84,7 +128,7 @@ randomly a context word from the words
 `'anarchism'`, `'originated'`, `'a'`, or `'term'`.
 
 
-#### `SkipGramModel` class 
+##### `SkipGramModel` class 
 This class is based on the 
 [`torch.nn.Module`](http://pytorch.org/docs/0.3.0/nn.html#torch.nn.Module) 
 class which is a base class for all neural network modules in PyTorch and 
@@ -112,9 +156,9 @@ In our case that means using the embedding and the projection layers to get the 
 distribution over the vocabulary for every input word in the batch.
 
 
-### Running the code
-First, build the image uisng the `docker_build.sh` script. 
-Next, run the code with the `docker_run.sh` script. 
+#### Running the code
+First, build the image using the `docker_build.sh` script. 
+Next, run the code with the `docker_run_part2.sh` script. 
 
 If successful, you should see an output similar the the following:
  ```
@@ -123,37 +167,54 @@ Data: 17005207
 Vocab size: 50001
 Unknown tokens: 418382
 Dataset: 17005207
-[5237, 3083, 12, 6, 195, 2, 3135, 46, 59, 156]
+[5234, 3081, 12, 6, 195, 2, 3134, 46, 59, 156]
 Starting training...
-Iteration: 1000 loss: 7.29280709028244
-Closest to one: five, two, three, nine, four
-Closest to are: were, chengdu, mice, impiety, is
-Closest to you: installing, lderlin, src, kazan, detract
-Closest to time: mixture, bread, grind, gentoo, cv
-Closest to thai: tonk, recalling, bluish, guidebook, scraped
-Closest to luciano: cartoonish, damages, parking, heartbeat, soup
-Closest to painted: documented, murdock, cukor, induced, santorum
+Iteration: 1000, elapsed time: 0:00:31.748593 [31 sec/1000 iters], loss: 7.296961873531342
+Closest to one: two, flanagan, collage, heaven, eight
+Closest to are: were, is, sampled, require, competed
+Closest to you: haldeman, poised, orpheus, astros, cessna
+Closest to time: sj, ayn, revisions, freebase, mushroom
+Closest to lambeth: escaping, centralised, annuity, cardinal, blackmailed
+Closest to to: dpp, infinitives, transsexualism, deviation, amano
+Closest to is: was, are, gaul, hatta, shuttle
 
-Iteration: 2000 loss: 6.86459051990509
-Closest to one: two, five, three, nine, four
-Closest to are: were, is, impiety, emerson, chengdu
-Closest to you: installing, lderlin, kazan, libro, moabite
-Closest to time: cv, gentoo, bnp, bread, vampyre
-Closest to expected: choke, bluff, implement, sco, cephalopods
-Closest to velocities: tet, loony, inactivity, hatchet, botanists
-Closest to nine: six, eight, five, one, zero
+Iteration: 2000, elapsed time: 0:01:01.879741 [30 sec/1000 iters], loss: 6.859302348136902
+Closest to one: two, seven, flanagan, eight, nine
+Closest to are: were, is, sampled, require, amassing
+Closest to you: haldeman, orpheus, poised, astros, i
+Closest to time: sj, ayn, revisions, freebase, hazards
+Closest to cells: votes, tiffany, committing, fifteen, rickenbacker
+Closest to linux: christensen, negativity, liberals, figured, offer
+Closest to bottle: rb, talmadge, nasal, precludes, kindred
 
 ...
 ```
+
+### Where should I run my code?
+Since this assignment requires many matrix multiplications, it's possible to get 
+a huge speed-up by running the code on a GPU. PyTorch supports both GPU and CPU and this code 
+will automatically use GPU if it is available, which will give a x70 speed-up 
+(30 seconds per 1000 iterations on a GPU vs 2000 seconds on a CPU).
+
+If you do not have a GPU available, you can use one of the department's GPU machines.
+Another alternative is to use 
+[https://colab.research.google.com](https://colab.research.google.com), which is 
+a jupyter notebook-like free to use environment. Moreover, allows users to use GPU resources.
+To enable GPU support open a notebook, click "Runtime" -> "Change runtime type", and select 
+"GPU" under the hardware accelerator section. Click "Save" to save thee changes. 
+
 
 ## Reading materials
 
 1. Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). 
 Efficient estimation of word representations in vector space. 
 *arXiv preprint arXiv:1301.3781.* [\[arXiv\]](https://arxiv.org/abs/1301.3781)
-2. [Deep Learning with PyTorch: A 60 Minute Blitz](http://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html)
-3. [Get started with Docker](https://docs.docker.com/get-started/)
-4. [PyTorch tutorials](http://pytorch.org/tutorials/)
-5. [PyTorch documentation](http://pytorch.org/docs/0.3.0/)
-6. [PyTorch examples](https://github.com/pytorch/examples)
+1. Bojanowski, P., Grave, E., Joulin, A., & Mikolov, T. (2016). 
+Enriching word vectors with subword information. 
+*arXiv preprint arXiv:1607.04606.* [\[arXiv\]](https://arxiv.org/abs/1607.04606)
+1. [Deep Learning with PyTorch: A 60 Minute Blitz](http://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html)
+1. [Get started with Docker](https://docs.docker.com/get-started/)
+1. [PyTorch tutorials](http://pytorch.org/tutorials/)
+1. [PyTorch documentation](http://pytorch.org/docs/0.3.0/)
+1. [PyTorch examples](https://github.com/pytorch/examples)
 

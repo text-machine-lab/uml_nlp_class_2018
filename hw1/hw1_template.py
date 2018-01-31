@@ -3,6 +3,7 @@ A template for the first assignment.
 See https://github.com/text-machine-lab/uml_nlp_class/tree/master/hw1/README.md for details.
 """
 
+from datetime import datetime
 from collections import Counter
 
 import numpy as np
@@ -158,6 +159,8 @@ def main():
     max_iterations = 20000
 
     losses = []
+    time_training_started = datetime.now()
+    tick = datetime.now()
     while True:
         for i, (inputs, targets) in enumerate(data_loader):
             optimizer.zero_grad()
@@ -175,9 +178,17 @@ def main():
             nb_iterations += 1
 
             if nb_iterations % iteration_step == 0:
+                tock = datetime.now()
+                time_for_iterations = tock - tick
+                time_elapsed = tock - time_training_started
+
                 loss = np.mean(losses)
                 losses = []
-                print('Iteration:', nb_iterations, 'loss:', loss)
+
+                log_str = 'Iteration: {}, elapsed time: {} [{} sec/{} iters], loss: {}'.format(
+                    nb_iterations, time_elapsed, time_for_iterations.seconds, iteration_step, loss
+                )
+                print(log_str)
 
                 # find closest word and print them
                 test_samples = cuda(Variable(torch.from_numpy(np.array([token2id[t] for t in test_words]))))
@@ -194,6 +205,8 @@ def main():
                     closest_tokens = [id2token[i] for i in closest[i]]
                     print('Closest to {}: {}'.format(target_token, ', '.join(closest_tokens)))
                 print()
+
+                tick = datetime.now()
 
             if nb_iterations > max_iterations:
                 return
