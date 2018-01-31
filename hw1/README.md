@@ -210,7 +210,7 @@ To enable GPU support open a notebook, click "Runtime" -> "Change runtime type",
 1. Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). 
 Efficient estimation of word representations in vector space. 
 *arXiv preprint arXiv:1301.3781.* [\[arXiv\]](https://arxiv.org/abs/1301.3781)
-1. [J. Eisenstein. NLP Notes, chapter 13](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
+1. J. Eisenstein. NLP Notes, chapter 13 [pdf](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
 1. Bojanowski, P., Grave, E., Joulin, A., & Mikolov, T. (2016). 
 Enriching word vectors with subword information. 
 *arXiv preprint arXiv:1607.04606.* [\[arXiv\]](https://arxiv.org/abs/1607.04606)
