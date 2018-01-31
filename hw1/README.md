@@ -1,7 +1,7 @@
 # Assignment #1
 
 This homework consists of two parts. In the first part you will use 
-the fastText [\[1\]](https://arxiv.org/abs/1607.04606) library to train 
+the [fastText](https://fasttext.cc/) [\[1\]](https://arxiv.org/abs/1607.04606) library to train 
 your very own word vectors on the [Text8](http://mattmahoney.net/dc/text8.zip) data.
 In the second part you will implement and train 
 a [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) 
@@ -14,7 +14,8 @@ classes for datasets and models.
 
 
 ## Part 1 - fastText library
-This library implements an algorithm, described in [\[2\]](https://arxiv.org/abs/1301.3781)
+The [fastText](https://fasttext.cc/) library implements an algorithm, 
+described in [\[2\]](https://arxiv.org/abs/1301.3781)
 and efficiently learns vectors representation of words. In addition, it can generate vectors for
 out-of-vocabulary words and preform text classification. 
 
