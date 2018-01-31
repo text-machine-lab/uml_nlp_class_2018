@@ -47,7 +47,7 @@ To query the closest words for a given word in an interactive mode run the `fast
 $ fasttext nn model_text8.bin
 ```
 
-## Part 2 - tarining a skip-gram Word2Vec model
+## Part 2 - Training a skip-gram Word2Vec model
 
 ### What you should do
 You should provide your code along with a `Dockerfile` 
