@@ -50,9 +50,11 @@ $ fasttext nn model_text8.bin
 ### Examine your word vectors
 
 Please do the following:
-* select 20 words from your corpus with frequency > 50 
-* for each of these words, identify top-15 closest words
-* cluster them into three clusters using k-means++ implementation in `scikit-learn`
+
+* Select 20 words from your corpus with frequency > 50 
+* For each of these words
+  * Identify top-15 closest words
+  * Cluster these words into three clusters using k-means++ implementation in `scikit-learn`
 
 
 
@@ -112,7 +114,7 @@ of the `SkipGramDataset` class.
 
 This class is based on the 
 [`torch.utils.data.Dataset`](http://pytorch.org/docs/0.3.0/data.html#torch.utils.data.Dataset) 
-class which is necesseraily
+class which is necessary
 in order to use the standard 
 [`DataLoader`](http://pytorch.org/docs/0.3.0/data.html#torch.utils.data.DataLoader) 
 class from PyTorch.
@@ -123,10 +125,10 @@ depends on the skip window (the `skip_window` parameter), since we can choose th
 or on the right sides of the target token.
 For example, consider the following dataset, consisted of the following 
 tokens: `['anarchism', 'originated', 'as', 'a', 'term', 'of', 'abuse', 'first', 'used', 'against']`.
-With the skip-window 2, the minimum index of the target word 
+With the skip window equals 2, the minimum index of the target word 
 is 2 (the third token), since we need to be able to index 
 the context words in the left. The same applies to the maximum index. 
-Thus, this method should correctly calculates the length of the dataset
+Thus, this method should correctly calculate the length of the dataset
 based on the skip window size.
 
 The `__getitem__` method should accept an index of the target word 
@@ -137,6 +139,11 @@ it would correspond to the target word `'as'` and this method would
 randomly a context word from the words 
 `'anarchism'`, `'originated'`, `'a'`, or `'term'`.
 
+Note that since neural netoworks require a numerical input, we associate each unique word (token) 
+with a unique integer, and use these integers, not words, as the input into the network.
+This conversion is done inside the `build_dataset` function. A better design solution would be to have the dataset class done this 
+association, but for simplicity we separated it into a stand-alone function. 
+
 
 ##### `SkipGramModel` class 
 This class is based on the 
@@ -146,22 +153,22 @@ user-defined models should subclass it.
 
 In general, you need to implement two method: `__init__` and `__forward__`.
 
-The `__init__` method should decalare all layers or parameters of the network that
+The `__init__` method should declare all layers or parameters of the network that
 you are going to use. For example, in our case you will need two layers:
 1. An embedding layer 
 ([torch.nn.Embedding](http://pytorch.org/docs/0.3.0/nn.html#torch.nn.Embedding)) 
 that would convert words indices into dense vectors 
-by just selecting an appropritate vectors at the corresponding position.
+by just selecting appropritate vectors at the corresponding position.
 2. A projection layer 
 ([torch.nn.Linear](http://pytorch.org/docs/0.3.0/nn.html#torch.nn.Linear))
 that would transform the embedding of a word into a probability distribution 
 over the context words. Note that the used loss function 
 ([torch.nn.CrossEntropyLoss](http://pytorch.org/docs/0.3.0/nn.html#torch.nn.CrossEntropyLoss))
-accepts unnormalized probabilities so you do not need an activation function here.
+accepts unnormalized probabilities so you **do not need** an activation function here.
 
-You should declare the mentioned above layers in the `__init__` method.
+You should declare the aforementioned layers in the `__init__` method.
 
-The `forward` method performs the forward pass on the network on the input data. 
+The `forward` method performs the forward pass of the network on the input data. 
 In our case that means using the embedding and the projection layers to get the output
 distribution over the vocabulary for every input word in the batch.
 
@@ -170,7 +177,7 @@ distribution over the vocabulary for every input word in the batch.
 First, build the image using the `docker_build.sh` script. 
 Next, run the code with the `docker_run_part2.sh` script. 
 
-If successful, you should see an output similar the the following:
+If successful, you should see an output similar the following:
  ```
 Data: 17005207
 ['anarchism', 'originated', 'as', 'a', 'term', 'of', 'abuse', 'first', 'used', 'against']
@@ -209,24 +216,23 @@ will automatically use GPU if it is available, which will give a x70 speed-up
 If you do not have a GPU available, you can use one of the department's GPU machines.
 Another alternative is to use 
 [https://colab.research.google.com](https://colab.research.google.com), which is 
-a jupyter notebook-like free to use environment. Moreover, allows users to use GPU resources.
+a jupyter notebook-like free to use environment. Moreover, it allows users to utilize GPU resources.
 To enable GPU support open a notebook, click "Runtime" -> "Change runtime type", and select 
 "GPU" under the hardware accelerator section. Click "Save" to save thee changes. 
 
 ## What to submit
 
 1. For part 1, submit a printout of the words you selected, along with clusters of top-K neighbours
-1. For part 2, submit
-* your code
-* a README file explaining the overall structure of your implementation 
-* a Dockerfile what else needs to be installed and how to run it.  Please use the base Docker image we provide.
+2. For part 2, submit
+    1. Your code
+    2. A README file explaining the overall structure of your implementation 
+    3. A Dockerfile that specifies what else needs to be installed and how to run it. Please use the base Docker image we provide.
 
 
 Homework assignments should be submitted using the submit utility available on the cs.uml.edu machines. Submit as follows:
 ```
 $ submit arum assignment-name items-to-submit
 ```
-Please use CS submit utility to submit this assignment.
 
 
 
