@@ -122,7 +122,8 @@ To simplify the code, the version of the dataset class, described below, is actu
 from the original version in the paper [\[2\]](https://arxiv.org/abs/1310.4546). 
 This version randomly samples a word from the context window
 whereas the original version provides a separate training example for every word in the context window.
-It is possible, however, to implement the original version and you are encouraged to do so.
+It is possible, however, to implement the original version and 
+you are encouraged to do so for an extra credit.
 
 The `__len__` method should return 
 the total length of the dataset. Note that in our case the length of the dataset
