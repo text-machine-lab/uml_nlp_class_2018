@@ -219,7 +219,7 @@ To enable GPU support open a notebook, click "Runtime" -> "Change runtime type",
 1. For part 2, submit
 * your code
 * a README file explaining the overall structure of your implementation 
-* a Dockerfile what else needs to be installed and how to run it.
+* a Dockerfile what else needs to be installed and how to run it.  Please use the base Docker image we provide.
 
 
 Homework assignments should be submitted using the submit utility available on the cs.uml.edu machines. Submit as follows:
