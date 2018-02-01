@@ -57,7 +57,6 @@ Please do the following:
   * Cluster these words into three clusters using k-means++ implementation in `scikit-learn`
 
 
-
 ## Part 2 - Training a skip-gram Word2Vec model
 
 ### What you should do
@@ -241,6 +240,9 @@ $ submit arum assignment-name items-to-submit
 1. Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). 
 Efficient estimation of word representations in vector space. 
 *arXiv preprint arXiv:1301.3781.* [\[arXiv\]](https://arxiv.org/abs/1301.3781)
+1. Mikolov, T., Sutskever, I., Chen, K., Corrado, G. and Dean, J.
+Distributed Representations of Words and Phrases and their Compositionality
+*arXiv preprint arXiv:1310.4546.* [[\arXiv\]](https://arxiv.org/abs/1310.4546)
 1. J. Eisenstein. NLP Notes, chapter 13 [\[pdf\]](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
 1. Bojanowski, P., Grave, E., Joulin, A., & Mikolov, T. (2016). 
 Enriching word vectors with subword information. 
