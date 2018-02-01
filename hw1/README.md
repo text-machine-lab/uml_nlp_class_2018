@@ -216,13 +216,17 @@ To enable GPU support open a notebook, click "Runtime" -> "Change runtime type",
 ## What to submit
 
 1. For part 1, submit a printout of the words you selected, along with clusters of top-K neighbours
-1. For part 2, submit your code, along a README file explaining the overall structure of your implementation.
+1. For part 2, submit
+* your code
+* a README file explaining the overall structure of your implementation 
+* a Dockerfile what else needs to be installed and how to run it.
+
 
 Homework assignments should be submitted using the submit utility available on the cs.uml.edu machines. Submit as follows:
 ```
 $ submit arum assignment-name items-to-submit
 ```
-Please use CS submit utility to submit your code together a Dockerfile specifying what else needs to be installed and how to run it.
+Please use CS submit utility to submit this assignment.
 
 
 
