@@ -1,11 +1,11 @@
 # Assignment #1
 
 This homework consists of two parts. In the first part you will use 
-the [fastText](https://fasttext.cc/) [\[1\]](https://arxiv.org/abs/1607.04606) library to train 
+the [fastText](https://fasttext.cc/) [\[4\]](https://arxiv.org/abs/1607.04606) library to train 
 your very own word vectors on the [Text8](http://mattmahoney.net/dc/text8.zip) data.
 In the second part you will implement and train 
 a [Word2Vec](https://en.wikipedia.org/wiki/Word2vec) 
-skip-gram model [\[2\]](https://arxiv.org/abs/1301.3781)
+skip-gram model [\[1\]](https://arxiv.org/abs/1301.3781)
 on the same data.
 
 If you choose to use the provided code, you will familiarize yourself 
@@ -15,7 +15,7 @@ classes for datasets and models.
 
 ## Part 1 - fastText library
 The [fastText](https://fasttext.cc/) library implements an algorithm, 
-described in [\[2\]](https://arxiv.org/abs/1301.3781)
+described in [\[4\]](https://arxiv.org/abs/1301.3781)
 and efficiently learns vectors representation of words. In addition, it can generate vectors for
 out-of-vocabulary words and preform text classification. 
 
@@ -117,6 +117,12 @@ class which is necessary
 in order to use the standard 
 [`DataLoader`](http://pytorch.org/docs/0.3.0/data.html#torch.utils.data.DataLoader) 
 class from PyTorch.
+
+To simplify the code, the version of the dataset class, described below, is actually different
+from the original version in the paper [\[2\]](https://arxiv.org/abs/1310.4546). 
+This version randomly samples a word from the context window
+whereas the original version provides a separate training example for every word in the context window.
+It is possible, however, to implement the original version and you are encouraged to do so.
 
 The `__len__` method should return 
 the total length of the dataset. Note that in our case the length of the dataset
