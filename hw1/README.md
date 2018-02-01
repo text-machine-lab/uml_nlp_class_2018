@@ -47,6 +47,8 @@ To query the closest words for a given word in an interactive mode run the `fast
 $ fasttext nn model_text8.bin
 ```
 
+### Examine your word vectors
+
 Please do the following:
 * select 20 words from your corpus with frequency > 50 
 * for each of these words, identify top-15 closest words
