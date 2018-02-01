@@ -52,7 +52,7 @@ $ fasttext nn model_text8.bin
 Please do the following:
 * select 20 words from your corpus with frequency > 50 
 * for each of these words, identify top-15 closest words
-* cluster them into three clusters using k-means++ implementation in `scikit-learn`
+* for each word, cluster its top-15 neighbors into three clusters using k-means++ implementation in `scikit-learn`
 
 
 
@@ -235,6 +235,9 @@ Please use CS submit utility to submit this assignment.
 1. Mikolov, T., Chen, K., Corrado, G., & Dean, J. (2013). 
 Efficient estimation of word representations in vector space. 
 *arXiv preprint arXiv:1301.3781.* [\[arXiv\]](https://arxiv.org/abs/1301.3781)
+1. Mikolov, T., Sutskever, I., Chen, K., Corrado, G. and Dean, J.
+Distributed Representations of Words and Phrases and their Compositionality
+*arXiv preprint arXiv:1310.4546.* [[\arXiv\]](https://arxiv.org/abs/1310.4546)
 1. J. Eisenstein. NLP Notes, chapter 13 [\[pdf\]](https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf)
 1. Bojanowski, P., Grave, E., Joulin, A., & Mikolov, T. (2016). 
 Enriching word vectors with subword information. 
