@@ -47,6 +47,13 @@ To query the closest words for a given word in an interactive mode run the `fast
 $ fasttext nn model_text8.bin
 ```
 
+Please do the following:
+* select 20 words from your corpus with frequency > 50 
+* for each of these words, identify top-15 closest words
+* cluster them into three clusters using k-means++ implementation in `scikit-learn`
+
+
+
 ## Part 2 - Training a skip-gram Word2Vec model
 
 ### What you should do
@@ -203,6 +210,18 @@ Another alternative is to use
 a jupyter notebook-like free to use environment. Moreover, allows users to use GPU resources.
 To enable GPU support open a notebook, click "Runtime" -> "Change runtime type", and select 
 "GPU" under the hardware accelerator section. Click "Save" to save thee changes. 
+
+## What to submit
+
+1. For part 1, submit a printout of the words you selected, along with clusters of top-K neighbours
+1. For part 2, submit your code, along a README file explaining the overall structure of your implementation.
+
+Homework assignments should be submitted using the submit utility available on the cs.uml.edu machines. Submit as follows:
+```
+$ submit arum assignment-name items-to-submit
+```
+Please use CS submit utility to submit your code together a Dockerfile specifying what else needs to be installed and how to run it.
+
 
 
 ## Reading materials
