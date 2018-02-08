@@ -157,7 +157,7 @@ This class is based on the
 class which is a base class for all neural network modules in PyTorch and 
 user-defined models should subclass it. 
 
-In general, you need to implement two method: `__init__` and `__forward__`.
+In general, you need to implement three method: `__init__`, `__forward__` and `find_closest`.
 
 The `__init__` method should declare all layers or parameters of the network that
 you are going to use. For example, in our case you will need two layers:
@@ -177,6 +177,13 @@ You should declare the aforementioned layers in the `__init__` method.
 The `forward` method performs the forward pass of the network on the input data. 
 In our case that means using the embedding and the projection layers to get the output
 distribution over the vocabulary for every input word in the batch.
+
+
+The `find_closest` method finds the closest tokens (in terms of cosine similarity) to each token in the provided list.
+To do this, you can either use the built-in
+[F.cosine_similarity](http://pytorch.org/docs/0.3.0/nn.html#torch.nn.functional.cosine_similarity) function or 
+just implement it manually using batch matrix multiplication (using the 
+[torch.matmul](http://pytorch.org/docs/0.3.0/torch.html#torch.matmul) function). 
 
 
 #### Running the code
