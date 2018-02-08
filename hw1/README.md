@@ -30,7 +30,24 @@ $ fasttext skipgram -input text8.txt -dim 128 -output model_text8
 ```
 
 This command will train a model and save it in a binary format in the file `model_text8.bin`.
-The trained vectors are be saved in the file `model_text8.vec`. 
+The trained vectors are saved in the file `model_text8.vec`. The format of this file is as follows:
+```
+<number of tokens> <vectors dim>
+<token 1> <val1> <val2> ... <val vectors dim>
+<token 2> <val1> <val2> ... <val vectors dim>
+
+<token number of tokens> <val1> <val2> ... <val vectors dim>
+``` 
+
+For example, the actual `.vec` file can look as this:
+```
+2000000 300
+, -0.0282 -0.0557 -0.0451 -0.0434 0.0712 -0.0855 -0.1085 -0.0561 -0.4523 -0.0202 0.0975 0.1047 0.1962 -0.0693 0.0213 -0.0235 0.1336 -0.0420 -0.0564 -0.0798 0.0424 -0.0409 -0.0536 -0.0252 0.0135 0.0064 0.1235 0.0461 0.0120 -0.0372 0.0650 0.0041 -0.1074 -0.0263 0.1133 -0.0029 0.0671 0.1065 0.0234 -0.0160 0.0070 0.4355 -0.0752 -0.4328 0.0457 0.0604 -0.0740 -0.0055 -0.0089 -0.2926 -0.0545 -0.1519 0.0990 -0.0193 -0.0050 0.0511 0.0404 0.1023 -0.0128 0.0488 -0.1567 -0.0759 -0.0190 0.1442 0.0047 -0.0186 0.0140 -0.0385 -0.0853 0.1572 0.1770 0.0084 -0.0250 -0.1145 -0.0663 -0.1244 -0.3977 -0.0124 -0.4586 -0.0220 0.5746 0.0218 -0.0754 0.0099 0.0397 -0.0154 0.0424 -0.0150 -0.0016 0.0305 0.0101 0.2266 0.1394 0.0189 0.0069 0.0394 0.0355 -0.0111 -0.0687 -0.0078 0.0224 0.0817 -0.1949 0.0001 0.4047 -0.0237 -0.0656 -0.0684 0.0233 0.0438 0.1203 -0.0276 0.0416 0.0114 -0.4529 0.1538 0.1323 -0.0186 -0.0914 -0.0312 0.1051 0.0212 0.0798 -0.0104 -0.0206 -0.0025 0.0043 -0.0378 0.2689 0.0747 -0.0418 -0.0048 -0.0387 0.0432 0.1704 0.0614 0.0905 -0.0436 -0.0141 -0.0315 0.0276 0.0151 -0.0103 -0.0266 -0.0512 -0.0408 -0.0651 0.0662 -0.0936 0.1371 0.0458 -0.1366 -0.0075 -0.0104 -0.0732 0.1205 0.1035 0.0106 -0.0317 -0.0316 0.6639 -0.0022 -0.1343 0.0144 -0.0338 0.0034 -0.0429 -0.0821 0.0037 0.1029 -0.0204 -0.0269 0.0052 -0.1034 0.1068 0.0121 0.0980 -0.0458 0.0199 -0.0132 0.1936 -0.0213 0.0209 -0.0025 0.0416 -0.0337 0.0516 -0.1014 0.0203 0.0198 -0.0305 -0.0313 0.0543 -0.0106 0.1441 -0.0178 -0.0627 0.0475 0.0352 -0.0254 -0.0949 0.0401 0.0317 0.0055 -0.0536 0.0191 -0.0511 -0.0409 -0.0030 0.1582 0.0108 0.5237 0.0436 0.0306 -0.0392 0.0177 0.0069 0.0605 0.1206 -0.0216 -0.0633 -0.2965 0.0521 -0.0150 -0.2207 -0.0642 -0.0906 -0.0121 0.0569 0.0944 -0.0652 -0.0108 -0.0477 0.0023 0.0077 -0.1547 0.0463 0.0698 -0.0376 -0.0291 0.0033 -0.0102 -0.0743 0.0085 0.0805 -0.0291 -0.0674 -0.0586 -0.0653 0.0283 -0.0255 0.0869 -0.0868 0.0090 0.3245 -0.0573 -0.0289 0.0470 -0.0117 0.0174 0.0132 -0.0226 -0.0664 0.0188 0.0263 0.0111 -0.0049 -0.0656 0.0295 0.0435 0.0290 0.1163 0.0448 -0.1139 -0.0553 -0.0528 0.1745 -0.0146 -0.1308 -0.0607 -0.0134 0.0781 0.0378 0.0228 -0.0728 -0.0059 0.0158 -0.0141 -0.0002 0.0193 -0.0148 -0.0463 0.0444 0.3034 0.1020 -0.0871 0.0317 -0.0370 -0.0725 -0.0042
+the 0.0231 0.0170 0.0157 -0.0773 0.1088 0.0031 -0.1487 -0.2672 -0.0357 -0.0487 0.0807 0.1532 -0.0739 -0.0291 -0.0445 -0.0014 0.1014 0.0186 -0.0253 0.0200 -0.0026 -0.0179 0.0005 0.0054 -0.0134 0.0233 -0.0755 -0.0156 0.0415 -0.4985 0.0410 -0.0616 0.0047 0.0325 -0.0162 -0.0172 0.0988 0.0766 -0.0796 -0.0345 0.0124 -0.1007 -0.0292 -0.0762 -0.1261 -0.0531 0.0424 0.0144 -0.0683 0.2859 0.0399 0.0201 0.3240 -0.0656 -0.0497 0.0090 0.0902 -0.0138 -0.0412 -0.0297 0.3139 -0.1428 0.0166 -0.0219 -0.0575 0.1359 -0.1655 0.0019 0.0323 -0.0013 -0.3033 -0.0091 0.1462 0.1860
+...
+```
+In this example this file contains 2,000,000 tokens with 300-dimension vectors for each of them.
+
 
 To see the vectors themselves, you can use the following command: 
 ```bash
@@ -55,6 +72,26 @@ Please do the following:
 * For each of these words
   * Identify top-15 closest words
   * Cluster these words into three clusters using k-means++ implementation in `scikit-learn`
+
+
+#### Python interface for fastText
+It might be easier to use a python interface for fastText to complete this part of the assignment.
+The [pyfasttext](https://github.com/vrasneur/pyfasttext) library provides a convenient 
+interface for a trained model (`*.bin` file) that you can use to efficiently find the closest words and 
+their embeddings (which in turn will be used as the input to k-means).
+
+The file 
+[hw1_fasttext_python.py](https://github.com/text-machine-lab/uml_nlp_class/tree/master/hw1/hw1_fasttext_python.py)
+contains an example how to use this library. This script print loads a trained model
+and prints the first 10 dimension of a word embedding for a target word.
+After that, it finds top 15 closest to the target words and prints them.  
+
+To run this script, execute the following command:
+```bash
+$ python3 hw1_fasttext_python.py
+```
+Note that you need to train a fastText model before running this script.
+
 
 
 ## Part 2 - Training a skip-gram Word2Vec model
