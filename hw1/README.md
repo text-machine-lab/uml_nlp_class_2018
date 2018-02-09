@@ -68,7 +68,8 @@ $ fasttext nn model_text8.bin
 
 Please do the following:
 
-* Select 20 words from your corpus with frequency > 50 
+* Select 20 words from your corpus with frequency > 50 (it can be just random words or 
+any words you come up with (eg `cake`, `dog`, `cat`, ...)
 * For each of these words
   * Identify top-15 closest words
   * Cluster these words into three clusters using k-means++ implementation in `scikit-learn`
