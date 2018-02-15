@@ -280,11 +280,12 @@ To enable GPU support open a notebook, click "Runtime" -> "Change runtime type",
     3. A Dockerfile that specifies what else needs to be installed and how to run it. Please use the base Docker image we provide.
 
 
-Homework assignments should be submitted using the submit utility available on the cs.uml.edu machines. Submit as follows:
-```
+Homework assignments should be submitted using the submit utility available on the cs.uml.edu machines. 
+Submit as follows:
+```bash
 $ submit arum assignment-name items-to-submit
 ```
-
+where assignment name is `hw1` for the first homework.
 
 
 ## Reading materials
