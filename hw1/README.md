@@ -83,9 +83,9 @@ their embeddings (which in turn will be used as the input to k-means).
 
 The file 
 [hw1_fasttext_python.py](https://github.com/text-machine-lab/uml_nlp_class/tree/master/hw1/hw1_fasttext_python.py)
-contains an example how to use this library. This script print loads a trained model
-and prints the first 10 dimension of a word embedding for a target word.
-After that, it finds top 15 closest to the target words and prints them.  
+contains an example how to use this library. This script loads a trained model
+and prints the first 10 dimensions of a word embedding for the target word.
+After that, it finds top 15 closest words to the target words and prints them.  
 
 To run this script, execute the following command:
 ```bash
