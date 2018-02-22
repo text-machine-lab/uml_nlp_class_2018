@@ -1,6 +1,6 @@
 Natural Language Processing Class at UMass Lowell
 =================================================
-This repository contains materials for the Intro to Natural Language Processing class at UMass Lowell.  Course website can be found here:
+This repository contains materials for the Natural Language Processing class at UMass Lowell.  Course website can be found here:
 http://www.cs.uml.edu/~arum/classes/nlp-spring2018/
 
 Contents:
