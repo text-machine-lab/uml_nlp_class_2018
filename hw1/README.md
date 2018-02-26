@@ -273,7 +273,7 @@ To enable GPU support open a notebook, click "Runtime" -> "Change runtime type",
 
 ## What to submit
 
-1. For part 1, submit a printout of the words you selected, along with clusters of top-K neighbours
+1. For part 1, submit a printout of the words you selected, along with clusters of top-K neighbours; please also submit your code.
 2. For part 2, submit
     1. Your code
     2. A README file explaining the overall structure of your implementation 
