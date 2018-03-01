@@ -6,7 +6,7 @@ import torch.utils.data
 import torch.nn.functional as F
 from torch.autograd import Variable
 
-from dataset import TurmpSpeechesDataset
+from dataset import TwitterFileArchiveDataset
 from gru import GRUCell
 from utils import init_weights, argmax, cuda, variable, get_sequence_from_indices
 
@@ -108,8 +108,9 @@ def main():
     max_grad_norm = 5
     teacher_forcing = 0.7
 
+    # filename = 'data/obama_white_house_tweets.txt'
     filename = 'data/trump_tweets.txt'
-    dataset = TurmpSpeechesDataset(filename, max_len=max_len)
+    dataset = TwitterFileArchiveDataset(filename, max_len=max_len)
 
     data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
     print('Data: {}, vocab: {}'.format(len(dataset), len(dataset.token2id)))

@@ -9,7 +9,6 @@ This assignment consists of several consequent steps:
 1. Loading the data
 2. Building a neural language model using a recurrent neural network cell provided by PyTorch
 3. Implementing the GRU cell from scratch
-4. [Optional] Train a language model on Donald Trump's speeches
 
 
 ## Structure of this template
@@ -34,7 +33,7 @@ as follows: `['I', 'am', 'great', '<pad>', '<pad>']`. By doing such padding, we 
 several sentences into a batch of samples in the form of a single matrix and efficiently process it on a GPU. 
 
 
-Your goal is to implement the `_load_file` method iin the `TurmpSpeechesDataset` class. This method 
+Your goal is to implement the `_load_file` method iin the `TwitterFileArchiveDataset` class. This method 
 should read the file, specified in the `filename` argument and return a list of sentence, where each sentence 
 is represented as a list of tokens.
 
@@ -57,7 +56,7 @@ it should produce the folowing:
 Notice how:
 1. The token `@JebBush` was correctly recognized as a Twitter's username and returns as a single token, 
 and not two tokens `@` and `JebBush`. To achieve such behaviour, you can use the `TweetTokenizer` class from NLTK.
-2. The HTML entity `&amp;` as transformed into the corresponding character `&`.
+2. The HTML entity `&amp;` was transformed into the corresponding character `&`.
 
 Your code should handle such cases, as well as remove any http links from the tweets.
 
@@ -149,10 +148,19 @@ You might want to use functions `torch.nn.functional.softmax` and `torch.multino
 
 You need to implement a GRU cell in the `GRUCell` class in the file `gru.py`.
 Use the following paper as the reference (section 3.2):  
+
 Chung, J., Gulcehre, C., Cho, K., & Bengio, Y. (2014). 
 Empirical evaluation of gated recurrent neural networks on sequence modeling. 
 [arXiv](https://arxiv.org/abs/1412.3555)
 
 
-## [Optional] Train a laguage model on Donald Trump's speeches
-Use the provided file `trump_speeches_v3.txt` as the input data. 
+# What to submit
+Submit all files in the `hw2/` in this repository with your code written in the marked places.
+Please make sure that you completed the code in the files `datasest.py`, `train.py`, and `gru.py`. 
+You code should be able to run in docker using the provided `docker_build.sh` and `docker_run.sh` scripts.
+
+Submit as follows using the submit utility available on the cs.uml.edu machines: 
+```bash
+$ submit arum hw2 items-to-submit
+```
+where `items-to-submit` can be the `hw2` directory for simplicity.
