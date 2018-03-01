@@ -1,7 +1,7 @@
 # Assignment #2
 
 In this homework you'll train a neural language model on a subset 
-of Donald Trump's and Barak Obamas tweets.
+of Donald Trump's and Barak Obama's tweets.
 Upon completion, you will have a model that is able to generate tweets that are similar 
 to their tweets but not exactly the same.
 
@@ -15,7 +15,7 @@ After finishing the third item, you need to train a language model
 on the Trump's tweets and observe the behaviour of the losses 
 on training (called `dataset_train` in the code) and validation (`dataset_val`) sets,
 taken from his tweets, as well as on the Obama's tweets (`dataset_val_ext`), and vice versa 
-(you can control the dataset using for training with the `train_on` variable). 
+(you can control the dataset used for training with the `train_on` variable). 
 
 
 ## Structure of this template
@@ -166,12 +166,12 @@ Submit all files in the `hw2/` in this repository with your code written in the 
 Please make sure that you completed the code in the files `datasest.py`, `train.py`, and `gru.py`. 
 You code should be able to run in docker using the provided `docker_build.sh` and `docker_run.sh` scripts.
 
-In addition, you should submit two plots, which reflect the losses 
+In addition, you should submit two plots which reflect the losses 
 on the training and two validation sets as the training progresses 
-(in other words, on the X-axis you should have epochs, 
+(in other words, on the X-axis you should have epochs 
 and on the Y-axis you should have the values of the losses).
  
-The first plot should be produced using the Trump's tweets for training, 
+The first plot should be produced using the Trump's tweets for training 
 and the second plot should be produced using the Obama's tweets for training.
 
 Submit as follows using the submit utility available on the cs.uml.edu machines: 
