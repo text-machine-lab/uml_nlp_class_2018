@@ -1,13 +1,9 @@
-Trump's speeches and tweets
-=========================
-Filename: `trump_speeches.txt`
-Trump speeches from https://github.com/ryanmcdermott/trump-speeches
-
-Filename: `trump_speeches_v2.txt`
-Trump speeches scraped from http://www.presidency.ucsb.edu/
-
-Filename: `trump_speeches_v3.txt`
-Trump speeches from https://github.com/andrewts129/transcript-scraping
-
+Donald Trump's and Barak Obama's administration tweets
+======================================================
 Filename: `trump_tweets.txt`
-30649 Trump's tweets from http://trumptwitterarchive.com/
+30649 Trump's tweets from @realDonaldTrump 
+http://trumptwitterarchive.com/
+
+Filename: `obama_white_house_tweets.txt`
+27346 tweets from the @WhiteHouse account of the Obama's administration 
+https://archive.org/details/ObamaWhiteHouseTwitterArchive
