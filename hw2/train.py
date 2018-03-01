@@ -1,4 +1,5 @@
 import os
+from collections import defaultdict
 
 import numpy as np
 import torch
@@ -6,9 +7,9 @@ import torch.utils.data
 import torch.nn.functional as F
 from torch.autograd import Variable
 
-from dataset import TwitterFileArchiveDataset
-from gru import GRUCell
-from utils import init_weights, argmax, cuda, variable, get_sequence_from_indices
+from hw2.dataset import TwitterFileArchiveDataset
+from hw2.gru import GRUCell
+from hw2.utils import init_weights, argmax, cuda, variable, get_sequence_from_indices
 
 
 class NeuralLanguageModel(torch.nn.Module):
@@ -25,7 +26,7 @@ class NeuralLanguageModel(torch.nn.Module):
         ### Insert your code below ###
         # create an embeding layer, a GRU cell, and the output projection layer
         ##############################
-        raise NotImplementedError('Implement the `__init__` method')
+        raise NotImplementedError()
 
         ###############################
         ### Insert your code above ####
@@ -58,7 +59,7 @@ class NeuralLanguageModel(torch.nn.Module):
             ### Insert your code below ###
             # `output` should be the output of the network at the current timestep
             ##############################
-            raise NotImplementedError('Implement the `forward` method')
+            raise NotImplementedError()
 
             ###############################
             ### Insert your code above ####
@@ -86,39 +87,66 @@ class NeuralLanguageModel(torch.nn.Module):
         for i in range(max_len):
             ##############################
             ### Insert your code below ###
-            # `output` should be the output of the network at the current timestep
+            # `x_i` should be the output of the network at the current timestep
             ##############################
-            raise NotImplementedError('Implement the `produce` method')
+            raise NotImplementedError()
 
             ###############################
             ### Insert your code above ####
             ###############################
-            outputs.append(output)
+            outputs.append(x_i)
 
         outputs = torch.cat(outputs)
         return outputs
 
 
 def main():
+    train_on = 'trump'  # 'trump' or 'obama'
+    val_size = 0.2
     max_len = 20
     embedding_size = 200
     hidden_size = 300
     batch_size = 64
-    nb_epochs = 500
+    nb_epochs = 100
     max_grad_norm = 5
     teacher_forcing = 0.7
 
-    # filename = 'data/obama_white_house_tweets.txt'
-    filename = 'data/trump_tweets.txt'
-    dataset = TwitterFileArchiveDataset(filename, max_len=max_len)
+    # load data and create datasets
+    # note that they use the same Vocab object so they will share the vocabulary
+    # (in particular, for a given token both of them will return the same id)
+    trump_tweets_filename = 'data/trump_tweets.txt'
+    obama_tweets_filename = 'data/obama_white_house_tweets.txt'
+    dataset_trump = TwitterFileArchiveDataset(trump_tweets_filename, max_len=max_len)
+    dataset_obama = TwitterFileArchiveDataset(obama_tweets_filename, max_len=max_len, vocab=dataset_trump.vocab)
 
-    data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
-    print('Data: {}, vocab: {}'.format(len(dataset), len(dataset.token2id)))
+    dataset_trump.vocab.prune_vocab(min_count=3)
 
-    vocab_size = len(dataset.token2id)
+    if train_on == 'trump':
+        dataset_train = dataset_trump
+        dataset_val_ext = dataset_obama
+    elif train_on == 'obama':
+        dataset_train = dataset_obama
+        dataset_val_ext = dataset_trump
+    else:
+        raise ValueError('`train_on` cannot be {} - use `trump` or `obama`'.format(train_on))
+
+    val_len = int(len(dataset_train) * val_size)
+    train_len = len(dataset_train) - val_len
+    dataset_train, dataset_val = torch.utils.data.dataset.random_split(dataset_train, [train_len, val_len])
+
+    # note that the the training and validation sets come from the same person,
+    # whereas the val_ext set come from a different person
+
+    data_loader_train = torch.utils.data.DataLoader(dataset_train, batch_size=batch_size, shuffle=True)
+    data_loader_val = torch.utils.data.DataLoader(dataset_val, batch_size=batch_size, shuffle=False)
+    data_loader_val_ext = torch.utils.data.DataLoader(dataset_val_ext, batch_size=batch_size, shuffle=False)
+    print('Training on: {}'.format(train_on))
+    print('Train {}, val: {}, val ext: {}'.format(len(dataset_train), len(dataset_val), len(dataset_val_ext)))
+
+    vocab_size = len(dataset_trump.vocab)
     model = NeuralLanguageModel(
         embedding_size, hidden_size, vocab_size,
-        dataset.token2id[dataset.INIT_TOKEN], dataset.token2id[dataset.EOS_TOKEN],
+        dataset_trump.vocab[dataset_trump.INIT_TOKEN], dataset_trump.vocab[dataset_trump.EOS_TOKEN],
         teacher_forcing
     )
     model = cuda(model)
@@ -126,49 +154,62 @@ def main():
 
     parameters = list(model.parameters())
     optimizer = torch.optim.Adam(parameters, amsgrad=True)
-    criterion = torch.nn.CrossEntropyLoss(ignore_index=dataset.token2id[dataset.PAD_TOKEN])
+    criterion = torch.nn.CrossEntropyLoss(ignore_index=dataset_trump.vocab[dataset_trump.PAD_TOKEN])
 
+    phases = ['train', 'val', 'val_ext']
+    data_loaders = [data_loader_train, data_loader_val, data_loader_val_ext]
+
+    losses_history = defaultdict(list)
     for epoch in range(nb_epochs):
-        epoch_loss = []
-        model.train()
-        for i, inputs in enumerate(data_loader):
-            optimizer.zero_grad()
+        for phase, data_loader in zip(phases, data_loaders):
+            if phase == 'train':
+                model.train()
+            else:
+                model.eval()
 
-            inputs = variable(inputs)
+            epoch_loss = []
+            for i, inputs in enumerate(data_loader):
+                optimizer.zero_grad()
 
-            outputs = model(inputs)
+                inputs = variable(inputs)
 
-            targets = inputs.view(-1)
-            outputs = outputs.view(targets.size(0), -1)
+                outputs = model(inputs)
 
-            loss = criterion(outputs, targets)
-            loss.backward()
+                targets = inputs.view(-1)
+                outputs = outputs.view(targets.size(0), -1)
 
-            torch.nn.utils.clip_grad_norm(parameters, max_grad_norm)
+                loss = criterion(outputs, targets)
 
-            optimizer.step()
+                if phase == 'train':
+                    loss.backward()
+                    torch.nn.utils.clip_grad_norm(parameters, max_grad_norm)
+                    optimizer.step()
 
-            epoch_loss.append(float(loss))
+                epoch_loss.append(float(loss))
 
-        epoch_loss = np.mean(epoch_loss)
-        print('Epoch {} loss {}'.format(epoch, epoch_loss))
+            epoch_loss = np.mean(epoch_loss)
+            print('Epoch {} {}\t\tloss {:.2f}'.format(epoch, phase, epoch_loss))
+            losses_history[phase].append(epoch_loss)
 
-        # decode something
-        model.eval()
+            # decode something in the validation phase
+            if phase == 'val_ext':
+                possible_start_tokens = [
+                    ['We', ],
+                ]
+                start_tokens = possible_start_tokens[np.random.randint(len(possible_start_tokens))]
+                start_tokens = np.array([dataset_trump.vocab[t] for t in start_tokens])
+                outputs = model.produce(start_tokens, max_len=20)
+                outputs = outputs.cpu().numpy()
 
-        possible_start_tokens = [
-            ['Global', ],
-            ['Fake', ],
-        ]
-        start_tokens = possible_start_tokens[np.random.randint(len(possible_start_tokens))]
-        start_tokens = np.array([dataset.token2id[t] for t in start_tokens])
-        outputs = model.produce(start_tokens, max_len=20)
-        outputs = outputs.cpu().numpy()
+                produced_sequence = get_sequence_from_indices(outputs, dataset_trump.vocab.id2token)
+                print('{}'.format(produced_sequence))
 
-        produced_sequence = get_sequence_from_indices(outputs, dataset.id2token)
-        print('{}'.format(produced_sequence))
-
-        model.train()
+    print('Losses:')
+    print('\t'.join(phases))
+    losses = [losses_history[phase] for phase in phases]
+    losses = list(zip(*losses))
+    for losses_vals in losses:
+        print('\t'.join('{:.2f}'.format(lv) for lv in losses_vals))
 
 
 if __name__ == '__main__':

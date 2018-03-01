@@ -15,7 +15,7 @@ class GRUCell(torch.nn.Module):
         ### Insert your code below ###
         # create the weight matrices and biases. Use the `torch.nn.Parameter` class
         ##############################
-        raise NotImplementedError('Implement the `__init__` method')
+        raise NotImplementedError()
 
         ###############################
         ### Insert your code above ####
@@ -33,7 +33,7 @@ class GRUCell(torch.nn.Module):
         # Perform the calculation according to the reference paper (see the README)
         # hidden_new is the new hidden state at the current timestep
         ##############################
-        raise NotImplementedError('Implement the `forward` method')
+        raise NotImplementedError()
 
         ###############################
         ### Insert your code above ####
