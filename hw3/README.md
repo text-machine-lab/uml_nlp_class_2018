@@ -13,11 +13,12 @@ a translation of the input sentence.
 To achieve this, we will use a sequence-to-sequence model
 proposed by \[1].
 
+<p align="center">
+ <img src="https://www.tensorflow.org/images/seq2seq/encdec.jpg" width="60%">
+<br />
+An overview of a Neural Machine Translation system. Image taken from [2].
+</p>
 
-![Overview](https://www.tensorflow.org/images/seq2seq/encdec.jpg)
-
-An overview of a Neural Machine Translation system.
-Image taken from \[2\].
 
 A brief overview how the model works:
 
@@ -33,11 +34,14 @@ A brief overview how the model works:
  on samples of parallel sentences (i.e. a source sentence in english and
  the corresponding sentence in french).
 
-
-![Detailed](https://www.tensorflow.org/images/seq2seq/seq2seq.jpg)
-
+<p align="center">
+ <img src="https://www.tensorflow.org/images/seq2seq/seq2seq.jpg" width="50%">
+<br />
 A more detailed structure of the model. Note two layers of RNNs.
-In this homework, we will use just one layer. Image taken from \[2\].
+In this homework, we will use just one layer. Image taken from [2].
+</p>
+
+
 
 
 # Implementation details
