@@ -1,22 +1,22 @@
 # Assignment #3
 
 In this homework you'll train a neural machine translation system
-to translate sentences in English to German.
+to translate sentences in English to French.
 
-This assignment is similar to the the second howmework.
+This assignment is similar to the the second homework.
 As in the HW#2 you will generate some text.
 However, the difference is that here this text will be conditioned
-on the source sentence. In other words, if in the previos homework
+on the source sentence. In other words, if in the previous homework
 the model generated just some text (maybe, starting with one or two
-specific words), in this assignemnt the output sentence should be
+specific words), in this assignment the output sentence should be
 a translation of the input sentence.
-To acheive this, we will use a seqeunce-to-sequence model
+To achieve this, we will use a sequence-to-sequence model
 proposed by \[1].
 
 
 ![Overview](https://www.tensorflow.org/images/seq2seq/encdec.jpg)
 
-An overview of a Naural Machine Translation system (english to french).
+An overview of a Neural Machine Translation system.
 Image taken from \[2\].
 
 A brief overview how the model works:
@@ -28,22 +28,21 @@ A brief overview how the model works:
  a special `<s>` (start-of-sentence) token
  until it produces a special `</s>` (end-of-sentence) token
  or the maximum length is reached.
- 4. The whole system, consting (in the simplest case)
+ 4. The whole system, consisting (in the simplest case)
  of an encoder, a decoder, and an output projection layer is trained end-to-end
  on samples of parallel sentences (i.e. a source sentence in english and
- the corresponding sentence in german).
+ the corresponding sentence in french).
 
 
 ![Detailed](https://www.tensorflow.org/images/seq2seq/seq2seq.jpg)
 
-A more detaied structure of the model. Note two layers of RNNs.
-In this howmework, we will use just one layer. Image taken from \[2\].
+A more detailed structure of the model. Note two layers of RNNs.
+In this homework, we will use just one layer. Image taken from \[2\].
 
 
 # Implementation details
 
-You will need to implement/modify six functions in the `Seq2SeqModel` class i
-n the `model.py` file:
+You will need to implement/modify six functions in the `Seq2SeqModel` class in the `model.py` file:
 `__init__`, `zero_state`, `encode_sentence`,
 `decoder_state`, `decoder_initial_inputs`, and `decode_sentence`.
 
@@ -56,7 +55,7 @@ The dataset class is already implemented for you in the `dataset.py` file.
 
 ## Model
 The model class, `Seq2SeqModel` is located in the file `model.py`.
-Conceptually the methods of this class are diviede into three groups:
+Conceptually the methods of this class are divided into three groups:
 
  1. Initialization: `__init__`
  2. Encoder methods: `zero_state` and `encode_sentence`
@@ -69,7 +68,7 @@ an LSTM cell for the decoder, and an output projection layer.
 Note that you should use the `torch.nn.LSTM` class for the encoder
 and the `torch.nn.LSTMCell` class for the decoder.
 The reason for this is that we will use special PyTorch functions
-that correctly handle variable lenghts sequences (since we have sentence of different length in a batch)
+that correctly handle variable lengths sequences (since we have sentence of different length in a batch)
 for the encoder, and just a for loop for the decoder.
 The `torch.nn.LSTMCell` class is more suitable in the latter case.
 
@@ -127,7 +126,6 @@ In addition, submit the output of the script in a file called `output.txt`.
 
 Please make sure that you completed the code in the file `model.py`
 You code should be able to run in docker using the provided `docker_build.sh` and `docker_run.sh` scripts.
-
 
 
 # References
