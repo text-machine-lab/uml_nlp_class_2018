@@ -1,7 +1,7 @@
 # Assignment #3
 
 In this homework you'll train a neural machine translation system
-to translate sentences in English to French.
+to translate sentences from English to French.
 
 This assignment is similar to the the second homework.
 As in the HW#2 you will generate some text.
@@ -49,7 +49,10 @@ You will need to implement/modify six functions in the `Seq2SeqModel` class in t
 The rest of the code is written for you.
 
 ## Input data
-As the training data we will use the data from http://www.manythings.org/anki/
+As the training data we will use the data from http://www.manythings.org/anki/.
+It contains 135842 English sentences with the corresponding French translation.
+For simplicity, we  filter out long sentences so the resulting training set
+contains 119854 pairs and the validation set contains 5000 paris.
 
 The dataset class is already implemented for you in the `dataset.py` file.
 
@@ -76,7 +79,7 @@ The `zero_state` method returns initial hidden state of the encoder. Namely, it 
 of tensors for the hidden state `h` and the cell state `c` correspondingly
 (see LSTM lecture for details on those states). This method is meant to be called from the `encode_sentence` method.
 
-The `encode_sentence` method encodes sentences in a batch into a hidden vectors `z`, which is the last hidden state
+The `encode_sentence` method encodes sentences in a batch into hidden vectors `z`, which is the last hidden state
 of the LSTM network. Note that since we have sequences of different lengths in a single batch, we cannot
 just take the last hidden state as follows: `z = h[:,-1,:]`. Instead, you will need to use the
 `torch.nn.utils.rnn.pack_padded_sequence` function. You might find the function `get_sequences_lengths` in `utils.py`
@@ -90,7 +93,7 @@ This method is meant to be called from the `decode_sentence` method.
 The `decoder_initial_inputs` method should just return a batch of indices of the `<s>` token to be served as input
 to the decoder at the first timestep. This method is meant to be called from the `decode_sentence` method.
 
-Finally, the `decode_sentence` method decodes the outputs translation using a for loop. The implementation of it is
+Finally, the `decode_sentence` method decodes the outputs translation using a for loop. Its implementation is
 very similar to that of the second homework.
 
 ## Running the code
